@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -31,6 +33,16 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Pedido", mappedBy="Persona")
+     */
+    private $pedidos;
+
+    public function __construct()
+    {
+        $this->pedidos = new ArrayCollection();
+    }
 
     public function getId():  ? int
     {
@@ -135,5 +147,36 @@ class User implements UserInterface
             $url .= sprintf('?size=%dx%d&set=set2', $size, $size);
         }
         return $url;
+    }
+
+    /**
+     * @return Collection|Pedido[]
+     */
+    public function getPedidos(): Collection
+    {
+        return $this->pedidos;
+    }
+
+    public function addPedido(Pedido $pedido): self
+    {
+        if (!$this->pedidos->contains($pedido)) {
+            $this->pedidos[] = $pedido;
+            $pedido->setPersona($this);
+        }
+
+        return $this;
+    }
+
+    public function removePedido(Pedido $pedido): self
+    {
+        if ($this->pedidos->contains($pedido)) {
+            $this->pedidos->removeElement($pedido);
+            // set the owning side to null (unless already changed)
+            if ($pedido->getPersona() === $this) {
+                $pedido->setPersona(null);
+            }
+        }
+
+        return $this;
     }
 }
