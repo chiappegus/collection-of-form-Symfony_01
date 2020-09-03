@@ -50,53 +50,58 @@ class Buffy
         $this->pedidos = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
+    public function __toString()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function getId():  ? int
+    {
+        return $this->id;
+    }
+
+    public function getName() :  ? string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name) : self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getStock(): ?int
+    public function getStock():  ? int
     {
         return $this->stock;
     }
 
-    public function setStock(int $stock): self
+    public function setStock(int $stock) : self
     {
         $this->stock = $stock;
 
         return $this;
     }
 
-    public function getPrecio(): ?float
+    public function getPrecio():  ? float
     {
         return $this->precio;
     }
 
-    public function setPrecio(float $precio): self
+    public function setPrecio(float $precio) : self
     {
         $this->precio = $precio;
 
         return $this;
     }
 
-    public function getAreStock(): ?bool
+    public function getAreStock():  ? bool
     {
         return $this->areStock;
     }
 
-    public function setAreStock(bool $areStock): self
+    public function setAreStock(bool $areStock) : self
     {
         $this->areStock = $areStock;
 
